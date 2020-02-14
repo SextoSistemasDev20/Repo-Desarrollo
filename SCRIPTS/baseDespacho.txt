@@ -1,0 +1,113 @@
+drop table if exists ARTICULO;
+
+drop table if exists CLIENTE;
+
+drop table if exists DESPACHO;
+
+drop table if exists FACTURADESPACHO;
+
+drop table if exists RELATIONSHIP_2;
+
+drop table if exists TRANSPORTE;
+
+/*==============================================================*/
+/* Table: ARTICULO                                              */
+/*==============================================================*/
+create table ARTICULO
+(
+   IDARTICULO           int not null,
+   IDFACTURA            int,
+   NUMEROFACTURA        numeric(8,0),
+   NOMBREARTICULO       char(256),
+   CODIGORESTRICCION    char(256),
+   VOLUMEN              char(256),
+   PESO                 char(256),
+   OBCERVACION          char(256),
+   ESTADO               char(2),
+   primary key (IDARTICULO)
+);
+
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE
+(
+   IDCLIENTE            int not null,
+   RAZONSOCIAL          char(256),
+   DIRECCION            char(256),
+   TELEFONOCELULAR      char(256),
+   RUC                  char(256),
+   OBSERVACION          char(256),
+   ESTADO               char(2),
+   primary key (IDCLIENTE)
+);
+
+/*==============================================================*/
+/* Table: DESPACHO                                              */
+/*==============================================================*/
+create table DESPACHO
+(
+   ID_DESPACHO          int not null,
+   NUMFACTURADESPACHO   char(256),
+   PESODESPACHO         char(256),
+   VOLUMENDESPACHO      char(256),
+   DESPOBSERVACIONDESPACHO char(256),
+   ESTADO               char(2),
+   primary key (ID_DESPACHO)
+);
+
+/*==============================================================*/
+/* Table: FACTURADESPACHO                                       */
+/*==============================================================*/
+create table FACTURADESPACHO
+(
+   IDFACTURA            int not null,
+   IDCLIENTE            int,
+   FECHA                date,
+   HORA                 time,
+   CODIGOARTICULO       char(256),
+   CANTIDADARTICULO     numeric(8,0),
+   OBCERVACIONFACTURA   char(256),
+   ESTADO               char(2),
+   primary key (IDFACTURA)
+);
+
+/*==============================================================*/
+/* Table: RELATIONSHIP_2                                        */
+/*==============================================================*/
+create table RELATIONSHIP_2
+(
+   IDTRANSPORTE         int not null,
+   ID_DESPACHO          int not null,
+   primary key (IDTRANSPORTE, ID_DESPACHO)
+);
+
+/*==============================================================*/
+/* Table: TRANSPORTE                                            */
+/*==============================================================*/
+create table TRANSPORTE
+(
+   IDTRANSPORTE         int not null,
+   NOMBRECHOFER         char(256),
+   NUMEROTRANSPORTE     char(256),
+   RUCCHOFER            char(256),
+   CEDULACHOFER         char(256),
+   CELULARCHOFER        char(256),
+   CELULARDUETRANSPORTE char(256),
+   NOMBREDUECHOFER      char(256),
+   OBCERVACION          char(256),
+   ESTADO               char(2),
+   primary key (IDTRANSPORTE)
+);
+
+alter table ARTICULO add constraint FK_RELATIONSHIP_5 foreign key (IDFACTURA)
+      references FACTURADESPACHO (IDFACTURA) on delete restrict on update restrict;
+
+alter table FACTURADESPACHO add constraint FK_RELATIONSHIP_1 foreign key (IDCLIENTE)
+      references CLIENTE (IDCLIENTE) on delete restrict on update restrict;
+
+alter table RELATIONSHIP_2 add constraint FK_RELATIONSHIP_3 foreign key (ID_DESPACHO)
+      references DESPACHO (ID_DESPACHO) on delete restrict on update restrict;
+
+alter table RELATIONSHIP_2 add constraint FK_RELATIONSHIP_4 foreign key (IDTRANSPORTE)
+      references TRANSPORTE (IDTRANSPORTE) on delete restrict on update restrict;
