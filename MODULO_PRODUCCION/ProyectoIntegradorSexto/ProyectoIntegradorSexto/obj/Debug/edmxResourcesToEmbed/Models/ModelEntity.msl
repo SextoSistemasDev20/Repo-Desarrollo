@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ecuadox8_login3ModelStoreContainer" CdmEntityContainer="ecuadox8_login3Entities">
+    <EntitySetMapping Name="Inventario">
+      <EntityTypeMapping TypeName="ecuadox8_login3Model.Inventario">
+        <MappingFragment StoreEntitySet="Inventario">
+          <ScalarProperty Name="InventarioId" ColumnName="InventarioId" />
+          <ScalarProperty Name="InventarioDescripcion" ColumnName="InventarioDescripcion" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductoUndiad" ColumnName="ProductoUndiad" />
+          <ScalarProperty Name="ProduccionId" ColumnName="ProduccionId" />
+          <ScalarProperty Name="InventarioFhr" ColumnName="InventarioFhr" />
+          <ScalarProperty Name="InventarioUser" ColumnName="InventarioUser" />
+          <ScalarProperty Name="InventarioEstado" ColumnName="InventarioEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MateriaPrima">
+      <EntityTypeMapping TypeName="ecuadox8_login3Model.MateriaPrima">
+        <MappingFragment StoreEntitySet="MateriaPrima">
+          <ScalarProperty Name="MateriaPrimaId" ColumnName="MateriaPrimaId" />
+          <ScalarProperty Name="MateriaPrimaDescripcion" ColumnName="MateriaPrimaDescripcion" />
+          <ScalarProperty Name="MateriaPrimaUnidad" ColumnName="MateriaPrimaUnidad" />
+          <ScalarProperty Name="MateriaPrimaPrecio" ColumnName="MateriaPrimaPrecio" />
+          <ScalarProperty Name="MateriaPrimaFhr" ColumnName="MateriaPrimaFhr" />
+          <ScalarProperty Name="MateriaPrimaUser" ColumnName="MateriaPrimaUser" />
+          <ScalarProperty Name="MateriaPrimaEstado" ColumnName="MateriaPrimaEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produccion">
+      <EntityTypeMapping TypeName="ecuadox8_login3Model.Produccion">
+        <MappingFragment StoreEntitySet="Produccion">
+          <ScalarProperty Name="ProduccionId" ColumnName="ProduccionId" />
+          <ScalarProperty Name="RecetaId" ColumnName="RecetaId" />
+          <ScalarProperty Name="ProduccionCantidad" ColumnName="ProduccionCantidad" />
+          <ScalarProperty Name="Produccionfhr" ColumnName="Produccionfhr" />
+          <ScalarProperty Name="ProduccionUser" ColumnName="ProduccionUser" />
+          <ScalarProperty Name="ProduccionEstado" ColumnName="ProduccionEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Producto">
+      <EntityTypeMapping TypeName="ecuadox8_login3Model.Producto">
+        <MappingFragment StoreEntitySet="Producto">
+          <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+          <ScalarProperty Name="ProductoCodigo" ColumnName="ProductoCodigo" />
+          <ScalarProperty Name="Productocantidad" ColumnName="Productocantidad" />
+          <ScalarProperty Name="ProductoFhr" ColumnName="ProductoFhr" />
+          <ScalarProperty Name="ProductoUser" ColumnName="ProductoUser" />
+          <ScalarProperty Name="ProductoEstado" ColumnName="ProductoEstado" />
+          <ScalarProperty Name="ProductoUnidad" ColumnName="ProductoUnidad" />
+          <ScalarProperty Name="ProductoDescripcion" ColumnName="ProductoDescripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Receta">
+      <EntityTypeMapping TypeName="ecuadox8_login3Model.Receta">
+        <MappingFragment StoreEntitySet="Receta">
+          <ScalarProperty Name="RecetaId" ColumnName="RecetaId" />
+          <ScalarProperty Name="RecetaCodigo" ColumnName="RecetaCodigo" />
+          <ScalarProperty Name="RecetaUnidad" ColumnName="RecetaUnidad" />
+          <ScalarProperty Name="RecetaCantidad" ColumnName="RecetaCantidad" />
+          <ScalarProperty Name="MateriaPrimaId" ColumnName="MateriaPrimaId" />
+          <ScalarProperty Name="RecetaFhr" ColumnName="RecetaFhr" />
+          <ScalarProperty Name="RecetaUser" ColumnName="RecetaUser" />
+          <ScalarProperty Name="RecetaEstado" ColumnName="RecetaEstado" />
+          <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+          <ScalarProperty Name="RecetaDescripcion" ColumnName="RecetaDescripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

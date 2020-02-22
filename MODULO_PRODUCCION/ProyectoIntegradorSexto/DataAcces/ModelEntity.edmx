@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ecuadox8_login3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+          </Key>
+          <Property Name="InventarioId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InventarioDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoUndiad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProduccionId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="InventarioFhr" Type="datetime" Nullable="false" />
+          <Property Name="InventarioUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="InventarioEstado" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MateriaPrima">
+          <Key>
+            <PropertyRef Name="MateriaPrimaId" />
+          </Key>
+          <Property Name="MateriaPrimaId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MateriaPrimaDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MateriaPrimaUnidad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrimaPrecio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MateriaPrimaFhr" Type="datetime" Nullable="false" />
+          <Property Name="MateriaPrimaUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MateriaPrimaEstado" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produccion">
+          <Key>
+            <PropertyRef Name="ProduccionId" />
+          </Key>
+          <Property Name="ProduccionId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecetaId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProduccionCantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Produccionfhr" Type="datetime" Nullable="false" />
+          <Property Name="ProduccionUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProduccionEstado" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductoCodigo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Productocantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoFhr" Type="datetime" Nullable="false" />
+          <Property Name="ProductoUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductoEstado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="ProductoUnidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="RecetaId" />
+          </Key>
+          <Property Name="RecetaId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecetaCodigo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecetaUnidad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecetaCantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MateriaPrimaId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RecetaFhr" Type="datetime" Nullable="false" />
+          <Property Name="RecetaUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecetaEstado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="ProductoId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RecetaDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="IINVENTARIO1">
+          <End Role="Produccion" Type="Self.Produccion" Multiplicity="1" />
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produccion">
+              <PropertyRef Name="ProduccionId" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="ProduccionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IPRODUCCION1">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Produccion" Type="Self.Produccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="RecetaId" />
+            </Principal>
+            <Dependent Role="Produccion">
+              <PropertyRef Name="RecetaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IRECETA1">
+          <End Role="MateriaPrima" Type="Self.MateriaPrima" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MateriaPrima">
+              <PropertyRef Name="MateriaPrimaId" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="MateriaPrimaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IRECETA2">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ecuadox8_login3ModelStoreContainer">
+          <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MateriaPrima" EntityType="Self.MateriaPrima" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produccion" EntityType="Self.Produccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="IINVENTARIO1" Association="Self.IINVENTARIO1">
+            <End Role="Produccion" EntitySet="Produccion" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="IPRODUCCION1" Association="Self.IPRODUCCION1">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Produccion" EntitySet="Produccion" />
+          </AssociationSet>
+          <AssociationSet Name="IRECETA1" Association="Self.IRECETA1">
+            <End Role="MateriaPrima" EntitySet="MateriaPrima" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="IRECETA2" Association="Self.IRECETA2">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ecuadox8_login3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="InventarioId" />
+          </Key>
+          <Property Name="InventarioId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InventarioDescripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoUndiad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProduccionId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="InventarioFhr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InventarioUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="InventarioEstado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Produccion" Relationship="Self.IINVENTARIO1" FromRole="Inventario" ToRole="Produccion" />
+        </EntityType>
+        <EntityType Name="MateriaPrima">
+          <Key>
+            <PropertyRef Name="MateriaPrimaId" />
+          </Key>
+          <Property Name="MateriaPrimaId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MateriaPrimaDescripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MateriaPrimaUnidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MateriaPrimaPrecio" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MateriaPrimaFhr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MateriaPrimaUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MateriaPrimaEstado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Receta" Relationship="Self.IRECETA1" FromRole="MateriaPrima" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Produccion">
+          <Key>
+            <PropertyRef Name="ProduccionId" />
+          </Key>
+          <Property Name="ProduccionId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecetaId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProduccionCantidad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Produccionfhr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProduccionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProduccionEstado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Inventario" Relationship="Self.IINVENTARIO1" FromRole="Produccion" ToRole="Inventario" />
+          <NavigationProperty Name="Receta" Relationship="Self.IPRODUCCION1" FromRole="Produccion" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductoCodigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Productocantidad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoFhr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProductoUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoEstado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoUnidad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductoDescripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Receta" Relationship="Self.IRECETA2" FromRole="Producto" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="RecetaId" />
+          </Key>
+          <Property Name="RecetaId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecetaCodigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RecetaUnidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RecetaCantidad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="MateriaPrimaId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RecetaFhr" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecetaUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RecetaEstado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="RecetaDescripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="MateriaPrima" Relationship="Self.IRECETA1" FromRole="Receta" ToRole="MateriaPrima" />
+          <NavigationProperty Name="Produccion" Relationship="Self.IPRODUCCION1" FromRole="Receta" ToRole="Produccion" />
+          <NavigationProperty Name="Producto" Relationship="Self.IRECETA2" FromRole="Receta" ToRole="Producto" />
+        </EntityType>
+        <Association Name="IINVENTARIO1">
+          <End Role="Produccion" Type="Self.Produccion" Multiplicity="1" />
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produccion">
+              <PropertyRef Name="ProduccionId" />
+            </Principal>
+            <Dependent Role="Inventario">
+              <PropertyRef Name="ProduccionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IRECETA1">
+          <End Role="MateriaPrima" Type="Self.MateriaPrima" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MateriaPrima">
+              <PropertyRef Name="MateriaPrimaId" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="MateriaPrimaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IPRODUCCION1">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Produccion" Type="Self.Produccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="RecetaId" />
+            </Principal>
+            <Dependent Role="Produccion">
+              <PropertyRef Name="RecetaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IRECETA2">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Receta">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ecuadox8_login3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Inventario" EntityType="Self.Inventario" />
+          <EntitySet Name="MateriaPrima" EntityType="Self.MateriaPrima" />
+          <EntitySet Name="Produccion" EntityType="Self.Produccion" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" />
+          <AssociationSet Name="IINVENTARIO1" Association="Self.IINVENTARIO1">
+            <End Role="Produccion" EntitySet="Produccion" />
+            <End Role="Inventario" EntitySet="Inventario" />
+          </AssociationSet>
+          <AssociationSet Name="IRECETA1" Association="Self.IRECETA1">
+            <End Role="MateriaPrima" EntitySet="MateriaPrima" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+          <AssociationSet Name="IPRODUCCION1" Association="Self.IPRODUCCION1">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Produccion" EntitySet="Produccion" />
+          </AssociationSet>
+          <AssociationSet Name="IRECETA2" Association="Self.IRECETA2">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Receta" EntitySet="Receta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ecuadox8_login3ModelStoreContainer" CdmEntityContainer="ecuadox8_login3Entities">
+          <EntitySetMapping Name="Inventario">
+            <EntityTypeMapping TypeName="ecuadox8_login3Model.Inventario">
+              <MappingFragment StoreEntitySet="Inventario">
+                <ScalarProperty Name="InventarioId" ColumnName="InventarioId" />
+                <ScalarProperty Name="InventarioDescripcion" ColumnName="InventarioDescripcion" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductoUndiad" ColumnName="ProductoUndiad" />
+                <ScalarProperty Name="ProduccionId" ColumnName="ProduccionId" />
+                <ScalarProperty Name="InventarioFhr" ColumnName="InventarioFhr" />
+                <ScalarProperty Name="InventarioUser" ColumnName="InventarioUser" />
+                <ScalarProperty Name="InventarioEstado" ColumnName="InventarioEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MateriaPrima">
+            <EntityTypeMapping TypeName="ecuadox8_login3Model.MateriaPrima">
+              <MappingFragment StoreEntitySet="MateriaPrima">
+                <ScalarProperty Name="MateriaPrimaId" ColumnName="MateriaPrimaId" />
+                <ScalarProperty Name="MateriaPrimaDescripcion" ColumnName="MateriaPrimaDescripcion" />
+                <ScalarProperty Name="MateriaPrimaUnidad" ColumnName="MateriaPrimaUnidad" />
+                <ScalarProperty Name="MateriaPrimaPrecio" ColumnName="MateriaPrimaPrecio" />
+                <ScalarProperty Name="MateriaPrimaFhr" ColumnName="MateriaPrimaFhr" />
+                <ScalarProperty Name="MateriaPrimaUser" ColumnName="MateriaPrimaUser" />
+                <ScalarProperty Name="MateriaPrimaEstado" ColumnName="MateriaPrimaEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produccion">
+            <EntityTypeMapping TypeName="ecuadox8_login3Model.Produccion">
+              <MappingFragment StoreEntitySet="Produccion">
+                <ScalarProperty Name="ProduccionId" ColumnName="ProduccionId" />
+                <ScalarProperty Name="RecetaId" ColumnName="RecetaId" />
+                <ScalarProperty Name="ProduccionCantidad" ColumnName="ProduccionCantidad" />
+                <ScalarProperty Name="Produccionfhr" ColumnName="Produccionfhr" />
+                <ScalarProperty Name="ProduccionUser" ColumnName="ProduccionUser" />
+                <ScalarProperty Name="ProduccionEstado" ColumnName="ProduccionEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="ecuadox8_login3Model.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="ProductoCodigo" ColumnName="ProductoCodigo" />
+                <ScalarProperty Name="Productocantidad" ColumnName="Productocantidad" />
+                <ScalarProperty Name="ProductoFhr" ColumnName="ProductoFhr" />
+                <ScalarProperty Name="ProductoUser" ColumnName="ProductoUser" />
+                <ScalarProperty Name="ProductoEstado" ColumnName="ProductoEstado" />
+                <ScalarProperty Name="ProductoUnidad" ColumnName="ProductoUnidad" />
+                <ScalarProperty Name="ProductoDescripcion" ColumnName="ProductoDescripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receta">
+            <EntityTypeMapping TypeName="ecuadox8_login3Model.Receta">
+              <MappingFragment StoreEntitySet="Receta">
+                <ScalarProperty Name="RecetaId" ColumnName="RecetaId" />
+                <ScalarProperty Name="RecetaCodigo" ColumnName="RecetaCodigo" />
+                <ScalarProperty Name="RecetaUnidad" ColumnName="RecetaUnidad" />
+                <ScalarProperty Name="RecetaCantidad" ColumnName="RecetaCantidad" />
+                <ScalarProperty Name="MateriaPrimaId" ColumnName="MateriaPrimaId" />
+                <ScalarProperty Name="RecetaFhr" ColumnName="RecetaFhr" />
+                <ScalarProperty Name="RecetaUser" ColumnName="RecetaUser" />
+                <ScalarProperty Name="RecetaEstado" ColumnName="RecetaEstado" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="RecetaDescripcion" ColumnName="RecetaDescripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

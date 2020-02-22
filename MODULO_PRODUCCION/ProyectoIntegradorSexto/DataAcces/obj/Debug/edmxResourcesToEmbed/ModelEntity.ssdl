@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ecuadox8_login3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Inventario">
+    <Key>
+      <PropertyRef Name="InventarioId" />
+    </Key>
+    <Property Name="InventarioId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InventarioDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ProductoUndiad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ProduccionId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="InventarioFhr" Type="datetime" Nullable="false" />
+    <Property Name="InventarioUser" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="InventarioEstado" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MateriaPrima">
+    <Key>
+      <PropertyRef Name="MateriaPrimaId" />
+    </Key>
+    <Property Name="MateriaPrimaId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MateriaPrimaDescripcion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="MateriaPrimaUnidad" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MateriaPrimaPrecio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="MateriaPrimaFhr" Type="datetime" Nullable="false" />
+    <Property Name="MateriaPrimaUser" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MateriaPrimaEstado" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Produccion">
+    <Key>
+      <PropertyRef Name="ProduccionId" />
+    </Key>
+    <Property Name="ProduccionId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RecetaId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ProduccionCantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Produccionfhr" Type="datetime" Nullable="false" />
+    <Property Name="ProduccionUser" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProduccionEstado" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="ProductoId" />
+    </Key>
+    <Property Name="ProductoId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductoCodigo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Productocantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ProductoFhr" Type="datetime" Nullable="false" />
+    <Property Name="ProductoUser" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductoEstado" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ProductoUnidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ProductoDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Receta">
+    <Key>
+      <PropertyRef Name="RecetaId" />
+    </Key>
+    <Property Name="RecetaId" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RecetaCodigo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RecetaUnidad" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RecetaCantidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="MateriaPrimaId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="RecetaFhr" Type="datetime" Nullable="false" />
+    <Property Name="RecetaUser" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="RecetaEstado" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="ProductoId" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="RecetaDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="IINVENTARIO1">
+    <End Role="Produccion" Type="Self.Produccion" Multiplicity="1" />
+    <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produccion">
+        <PropertyRef Name="ProduccionId" />
+      </Principal>
+      <Dependent Role="Inventario">
+        <PropertyRef Name="ProduccionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IPRODUCCION1">
+    <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+    <End Role="Produccion" Type="Self.Produccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Receta">
+        <PropertyRef Name="RecetaId" />
+      </Principal>
+      <Dependent Role="Produccion">
+        <PropertyRef Name="RecetaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IRECETA1">
+    <End Role="MateriaPrima" Type="Self.MateriaPrima" Multiplicity="1" />
+    <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MateriaPrima">
+        <PropertyRef Name="MateriaPrimaId" />
+      </Principal>
+      <Dependent Role="Receta">
+        <PropertyRef Name="MateriaPrimaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IRECETA2">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="Receta" Type="Self.Receta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="ProductoId" />
+      </Principal>
+      <Dependent Role="Receta">
+        <PropertyRef Name="ProductoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ecuadox8_login3ModelStoreContainer">
+    <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MateriaPrima" EntityType="Self.MateriaPrima" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produccion" EntityType="Self.Produccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="IINVENTARIO1" Association="Self.IINVENTARIO1">
+      <End Role="Produccion" EntitySet="Produccion" />
+      <End Role="Inventario" EntitySet="Inventario" />
+    </AssociationSet>
+    <AssociationSet Name="IPRODUCCION1" Association="Self.IPRODUCCION1">
+      <End Role="Receta" EntitySet="Receta" />
+      <End Role="Produccion" EntitySet="Produccion" />
+    </AssociationSet>
+    <AssociationSet Name="IRECETA1" Association="Self.IRECETA1">
+      <End Role="MateriaPrima" EntitySet="MateriaPrima" />
+      <End Role="Receta" EntitySet="Receta" />
+    </AssociationSet>
+    <AssociationSet Name="IRECETA2" Association="Self.IRECETA2">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Receta" EntitySet="Receta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
